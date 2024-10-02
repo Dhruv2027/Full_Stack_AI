@@ -1,114 +1,133 @@
 @font-face {
-    font-family: "ColfaxAI";
-    src: url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff2) format("woff2"),
-         url(https://cdn.openai.com/API/fonts/ColfaxAIRegular.woff) format("woff");
+    font-family: "HarryPotter";
+    src: url('https://www.fontsaddict.com/fontface/harrypotter7.ttf') format("truetype");
     font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "ColfaxAI";
-    src: url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff2) format("woff2"),
-         url(https://cdn.openai.com/API/fonts/ColfaxAIBold.woff) format("woff");
-    font-weight: bold;
     font-style: normal;
 }
 
 /* Magical Harry Potter Styling */
 :root {
-    --gryffindor-red: #7f0909;
-    --gryffindor-gold: #d4af37;
-    --text-color: #821313;
-    --border-color: #4b10a3;
+    --gryffindor-red: #740001;
+    --gryffindor-gold: #D3A625;
+    --parchment: #F0E68C;
+    --ink: #2A0C0C;
+    --spell-blue: #0E6BC9;
 }
 
-.main,
-.main input {
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--text-color);
-    font-family: "ColfaxAI", Helvetica, sans-serif;
+body {
+    background-image: url('https://steamuserimages-a.akamaihd.net/ugc/1695024823120006318/A7F04F93EA4353BB31C494814C029D53145B1C0C/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false');
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    font-family: "HarryPotter", serif;
 }
 
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 60px;
-    background-color: var(--gryffindor-red); /* Your magical background color */
-    border: 2px solid var(--gryffindor-gold);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    background-color: rgba(116, 0, 1, 0.8);
+    border: 3px solid var(--gryffindor-gold);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(211, 166, 37, 0.5);
+    max-width: 800px;
+    margin: 2rem auto;
 }
 
-.main .icon {
-    width: 34px;
+.main h1 {
+    font-size: 3rem;
+    color: var(--gryffindor-gold);
+    text-shadow: 2px 2px 4px var(--ink);
+    margin-bottom: 1rem;
 }
 
-.main h3 {
-    font-size: 32px;
-    line-height: 40px;
-    font-weight: bold;
-    color: var(--text-color);
-    margin: 16px 0 40px;
-    text-shadow: 3px 3px 2px #000;
+.logo {
+    width: 300px;
+    margin-bottom: 1rem;
 }
 
 .main form {
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .main input[type="text"] {
-    padding: 12px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    margin-bottom: 24px;
-    outline-color: var(--gryffindor-gold);
-    background-color: #333;
-    color: var(--text-color);
-}
-
-.main ::placeholder {
-    color: #8e8ea0;
-    opacity: 1;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--gryffindor-gold);
+    border-radius: 5px;
+    background-color: var(--parchment);
+    color: var(--ink);
+    margin-bottom: 1rem;
 }
 
 .main input[type="submit"] {
-    padding: 12px 0;
-    color: #fff;
-    background-color: var(--border-color);
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: var(--gryffindor-gold);
+    color: var(--gryffindor-red);
     border: none;
-    border-radius: 4px;
-    text-align: center;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .main input[type="submit"]:hover {
-    background-color: var(--gryffindor-gold);
-    color: var(--gryffindor-red);
+    background-color: var(--spell-blue);
+    color: var(--parchment);
 }
 
-.main .result {
-    font-weight: bold;
-    margin-top: 40px;
+.main input[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .queryOutput {
-    max-width: 90%; /* Adjust based on your layout */
-    min-width: 90%;
-    overflow: auto; /* Adds scrollbars when content overflows */
-    background-color: #f4f4f4; /* Light grey background */
-    border: 1px solid #ccc; /* Light grey border */
-    padding: 10px;
-    margin-top: 20px;
-    white-space: pre-wrap; /* Ensures that data wraps within container */
-    word-break: break-all; /* Ensures long strings do not overflow */
+    background-color: var(--parchment);
+    border: 2px solid var(--gryffindor-gold);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 500px;
+    color: var(--ink);
 }
 
-/* Logo styling */
-.logo {
-    width: 300px; /* Adjust size as needed */
-    margin-bottom: 20px;
+.queryOutput h2, .queryOutput h3 {
+    color: var(--gryffindor-red);
+    margin-top: 0;
+}
+
+.queryOutput ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.queryOutput li {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--gryffindor-gold);
+    padding-bottom: 0.5rem;
+}
+
+.queryOutput li:last-child {
+    border-bottom: none;
+}
+
+.queryOutput small {
+    display: block;
+    color: var(--spell-blue);
+    font-style: italic;
+}
+
+.error {
+    color: #ff0000;
+    background-color: #ffeeee;
+    border: 1px solid #ff0000;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-top: 1rem;
 }

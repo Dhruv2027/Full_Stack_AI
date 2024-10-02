@@ -1,26 +1,33 @@
-import express from "express";
-import cors from "cors";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { Chroma } from "@langchain/community/vectorstores/chroma";
+import express from 'express';
+import cors from 'cors';
+import generate from './api.js';
 
 const app = express();
-app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(express.json()); 
 
-// const vectorStore = new Chroma({ url: "http://localhost:8000" });
-// const collection = await Chroma.getCollection("harry-potter-ai");
+app.use(cors(
+  { origin: "*" }
+));
+const port = 3005;
 
-app.get('/', (req,res) =>{
-    res.send("hello");
+app.get('/', (req, res) => {
+
+    res.send('Hello World!');
+    }
+);
+
+app.post("/generate", async(req, res) => {
+    try {
+        const {queryDescription} = req.body;
+        const queryResult = await generate(queryDescription);
+        console.log(queryResult);
+        res.json({result: queryResult});
+    } catch (error) {
+        console.log(error);
+        res.json({queryResult: 'Great question.  I have not been trained on that.  Ask me something else.'});
+    }
 })
 
-app.post("/generate", async(req,res) =>{
-    const {queryDescription} = req.body;
-    console.log("here is the query");
-    res.json({answer: "answer goes here"});
-})
-
-const PORT = process.env.PORT || 3005;
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`server listening at http://localhost:${port}`);
 });

@@ -1,52 +1,141 @@
-import styles from "./index.module.css"
-import React from 'react'
-import logo from "/Users/dhruvsharma/Library/CloudStorage/OneDrive-Personal/University/Projects/Full_Stack_AI/client/src/assets/Harry-Potter-Logo.png";
-import { useState } from "react";
+// import styles from "./index.module.css"
+// import React, { useState } from 'react'
+// import logo from "./assets/Harry-Potter-Logo.png";
+
+// function App() {
+//   const [queryDescription, setQueryDescription] = useState('');
+//   const [txtQuery, setTxtQuery] = useState('');
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [error, setError] = useState('');
+//   const [answer, setAnswer] = useState('');
+
+//   const onSubmit = async (e) => {
+//     e.preventDefault();
+//     setIsLoading(true);
+//     setError('');
+//     setAnswer('');
+//     try {
+//       const query = await generateAnswer();
+//       setTxtQuery(query);
+//       setAnswer(query); // Assuming the generated query is the answer
+//     } catch (err) {
+//       setError('Failed to generate answer. Please try again.');
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   }
+
+//   const generateAnswer = async () => {
+//     const response = await fetch("http://localhost:3005/generate", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ result: result })
+//     });
+
+//     if (!response.ok) {
+//       throw new Error('Failed to generate query');
+//     }
+
+//     const data = await response.json();
+//     return data.result;
+//   }
+
+//   return (
+//     <main className={styles.main}>
+//       <img src={logo} alt="Harry Potter Logo" className={styles.logo} />
+//       <h1>Harry Potter AI</h1>
+//       <form onSubmit={onSubmit}>
+//         <input
+//           type="text"
+//           name="query description"
+//           placeholder="What question do you have?"
+//           value={queryDescription}
+//           onChange={(e) => setQueryDescription(e.target.value)}
+//         />
+//         <input type="submit" value="Generate Answer" disabled={isLoading} />
+//       </form>
+//       {isLoading && <p>Generating answer...</p>}
+//       {error && <p className={styles.error}>{error}</p>}
+//       {answer && (
+//         <div className={styles.queryOutput}>
+//           <h2>Answer:</h2>
+//           console.log(answer);
+//           <p className={styles.queryOutput}>{answer}</p>
+//         </div>
+//       )}
+//     </main>
+//   )
+// }
+
+// export default App
+
+import React, { useState } from 'react';
+import styles from './index.module.css';
+import logo from './assets/Harry-Potter-Logo.png';
 
 function App() {
   const [queryDescription, setQueryDescription] = useState('');
-  const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [answer, setAnswer] = useState('');
 
-  const onSubmit = async(e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(queryDescription);
-    const query = await generateQuery();
-    setQuery(query);
-  }
+    setIsLoading(true);
+    setError('');
+    setAnswer('');
+    try {
+      const result = await generateAnswer(queryDescription);
+      setAnswer(result);
+    } catch (err) {
+      setError('Failed to generate answer. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const generateQuery = async() => {
-    const response = await fetch("http://localhost:3005/generate",{
-      method:"POST",
+  const generateAnswer = async (queryDescription) => {
+    const response = await fetch('http://localhost:3005/generate', {
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({queryDescription: queryDescription})
+      body: JSON.stringify({ queryDescription }),
     });
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error('Failed to generate query');
+    }
 
-    return data.answer;
-  }
+    const data = await response.json();
+    return data.result;
+  };
 
   return (
     <main className={styles.main}>
       <img src={logo} alt="Harry Potter Logo" className={styles.logo} />
-      <h1> Harry Potter AI </h1> 
-      <form onSubmit = {onSubmit}>
-          <input type="text"
-          name = "query description"
-          placeholder = "What question do you have?"
-          onChange = {(e) => setQueryDescription(e.target.value)}/>
-
-          <input type = "submit" value = "Generate Answer"/>
+      <h1>Harry Potter AI</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="What question do you have?"
+          value={queryDescription}
+          onChange={(e) => setQueryDescription(e.target.value)}
+        />
+        <input type="submit" value="Generate Answer" disabled={isLoading} />
       </form>
-      {query && <div className={styles.queryOutput}>
-        <h2>Answer:</h2>
-        <p>{query}</p>
-        
-      </div>}
+      {isLoading && <p>Generating answer...</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {answer && (
+        <div className={styles.queryOutput}>
+          <h2>Answer:</h2>
+          <p>{answer}</p>
+        </div>
+      )}
     </main>
-    
-  )
+  );
 }
-export default App
+
+export default App;
