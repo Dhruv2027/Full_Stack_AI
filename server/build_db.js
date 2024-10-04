@@ -1,56 +1,12 @@
-// import { TextLoader } from "langchain/document_loaders/fs/text";
-// import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-// import { OpenAIEmbeddings } from "@langchain/openai";
-// import { FaissStore } from "@langchain/community/vectorstores/faiss";
-// import { OllamaEmbeddings } from "@langchain/ollama";
-// // import type { Document } from "@langchain/core/documents";
-// import fs from "fs";
-
-// const loader = new TextLoader("HPmini.txt");
-// const docs = await loader.load();
-
-// const splitter = new RecursiveCharacterTextSplitter({
-//     chunkSize: 500,
-//     chunkOverlap: 100
-// });
-
-// // const openaiApiKey = process.env.OPENAI_API_KEY;
-// // if (!openaiApiKey) {
-// //   console.error('OPENAI_API_KEY not found in environment');
-// //   process.exit(1);
-// // }
-
-// const splits = await splitter.splitDocuments(docs);
-
-// const embeddings = new OllamaEmbeddings({
-//     model: "nomic-embed-text"
-// });
-
-// const directory = "./";
-
-// if (!fs.existsSync(directory)) {
-//     const vectorStore = await FaissStore.fromDocuments(splits, embeddings);
-//     await vectorStore.save(directory);
-// }
-
-// const loadedVectorStore = await FaissStore.load(
-//     directory,
-//     embeddings
-// );
-
-// export default loadedVectorStore;
-
-// // const result = await loadedVectorStore.similaritySearch("Harry Potter", 1);
-// // console.log(result);
-
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { OllamaEmbeddings } from "@langchain/ollama";
 import fs from "fs";
 import path from "path";
+import { OpenAIEmbeddings } from "@langchain/openai";
 
-const loader = new TextLoader("HPmini.txt");
+const loader = new TextLoader("HP2.txt");
 const docs = await loader.load();
 
 const splitter = new RecursiveCharacterTextSplitter({
@@ -60,10 +16,13 @@ const splitter = new RecursiveCharacterTextSplitter({
 
 const splits = await splitter.splitDocuments(docs);
 
-const embeddings = new OllamaEmbeddings({
-    model: "nomic-embed-text",
+// const embeddings = new OllamaEmbeddings({
+//     model: "nomic-embed-text",
+// });
+const embeddings = new OpenAIEmbeddings({
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    model: "text-embedding-3-small",
 });
-
 // Directory where vector store will be saved
 const directory = "./";
 const docstoreFile = path.join(directory, "docstore.json");
@@ -92,7 +51,3 @@ if (!fs.existsSync(directory) || !fs.existsSync(docstoreFile)) {
 
 // Export the vector store for use in the full stack app
 export default vectorStore;
-
-// Example usage (you can use this in your app's API routes):
-// const result = await vectorStore.similaritySearch("Harry Potter", 1);
-// console.log(result);
