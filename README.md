@@ -1,4 +1,4 @@
-# Harry Potter AI Question Answering System
+# Hogwarts Lexicon - A Question Answering System Based on the Harry Potter Series
 
 This project is an AI-powered question answering system based on the Harry Potter book series. It uses natural language processing and machine learning techniques to provide detailed answers to user queries about the Harry Potter universe.
 
